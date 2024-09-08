@@ -7,6 +7,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Initialize a new database
     const db = new SQL.Database();
 
+    //Button Initialization
+    const outputTable = document.getElementById("output-table");
+
     // Initialize CodeMirror for SQL editing
     const editor = CodeMirror.fromTextArea(document.getElementById("sql-editor"), {
         mode: "text/x-sql", // Set mode to SQL for syntax highlighting
@@ -41,7 +44,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Execute SQL queries and handle multiple results
     function executeSQLQueries(queries) {
-        const outputTable = document.getElementById("output-table");
         queries.forEach((query, index) => {
             try {
                 const result = db.exec(query); // Execute SQL query
