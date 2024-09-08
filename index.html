@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAV SQL Editor</title>
+    <link rel="icon" type="image/x-icon" href="RAV.png">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/sql/sql.min.js"></script>
+</head>
+
+<body class="bg-gray-100 p-6">
+    <!-- SQL Editor and Run Button -->
+    <div class="container mx-auto py-4">
+        <h1 class="text-xl font-bold mb-4">RAV SQL Editor</h1>
+        <textarea id="sql-editor" class="w-full h-60"></textarea>
+        <button id="run-sql" class="bg-blue-500 text-white px-4 py-2 mt-4">Run SQL</button>
+        <div id="output-table" class="mt-6"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/sql-wasm.js"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>
