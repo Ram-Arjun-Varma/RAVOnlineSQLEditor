@@ -42,8 +42,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Execute SQL queries and handle multiple results
     function executeSQLQueries(queries) {
         const outputTable = document.getElementById("output-table");
-        outputTable.innerHTML = ''; // Clear previous output
-
         queries.forEach((query, index) => {
             try {
                 const result = db.exec(query); // Execute SQL query
@@ -64,6 +62,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Execute SQL on button click
     runButton.addEventListener("click", () => {
+        outputTable.innerHTML = ''; // Clear previous output
         const queryText = editor.getValue().trim(); // Get SQL from CodeMirror
         if (queryText) {
             const queries = queryText.split(';').filter(q => q.trim() !== ''); // Split queries by ';'
