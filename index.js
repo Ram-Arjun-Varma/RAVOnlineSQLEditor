@@ -83,9 +83,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             const a = document.createElement("a");
             a.href = url;
             a.download = "query.sql"; // Name of the file to be downloaded
+            a.target = "_blank"; // Open download in a new tab
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
+            URL.revokeObjectURL(url); // Clean up the URL object after download
         } else {
             alert("No SQL query to download!");
         }
