@@ -13,11 +13,14 @@
 </head>
 
 <body class="bg-gray-100 p-6">
-    <!-- SQL Editor and Run Button -->
+    <!-- SQL Editor and Buttons -->
     <div class="container mx-auto py-4">
         <h1 class="text-xl font-bold mb-4">RAV SQL Editor</h1>
         <textarea id="sql-editor" class="w-full h-60"></textarea>
-        <button id="run-sql" class="bg-blue-500 text-white px-4 py-2 mt-4">Run SQL</button>
+        <div class="mt-4">
+            <button id="run-sql" class="bg-blue-500 text-white px-4 py-2">Run SQL</button>
+            <button id="download-sql" class="bg-green-500 text-white px-4 py-2 ml-2">Download SQL</button>
+        </div>
         <div id="output-table" class="mt-6"></div>
     </div>
 

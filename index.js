@@ -71,4 +71,23 @@ document.addEventListener("DOMContentLoaded", async () => {
             executeSQLQueries(queries); // Execute each query
         }
     });
+
+    // Download SQL as text file
+    const downloadButton = document.getElementById("download-sql");
+
+    downloadButton.addEventListener("click", () => {
+        const sqlText = editor.getValue().trim();
+        if (sqlText) {
+            const blob = new Blob([sqlText], { type: "text/plain" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "query.sql"; // Name of the file to be downloaded
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        } else {
+            alert("No SQL query to download!");
+        }
+    });
 });
