@@ -102,17 +102,25 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     fileInput.addEventListener("change", (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const sqlText = e.target.result;
-                editor.setValue(sqlText); // Set the content in the editor
-                outputTable.innerHTML = ''; // Clear previous output
-                const queries = sqlText.split(';').filter(q => q.trim() !== ''); // Split queries by ';'
-                executeSQLQueries(queries); // Execute each query after importing
-            };
-            reader.readAsText(file); // Read the content of the file
+        try {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const sqlText = e.target.result;
+                    editor.setValue(sqlText); // Set the content in the editor
+                    outputTable.innerHTML = ''; // Clear previous output
+                    const queries = sqlText.split(';').filter(q => q.trim() !== ''); // Split queries by ';'
+                    executeSQLQueries(queries); // Execute each query after importing
+                };
+                reader.onerror = function(error) {
+                    console.error('Error reading file:', error);
+                };
+                reader.readAsText(file); // Read the content of the file
+            }
+        } catch (error) {
+            console.error('Error handling file:', error);
+            alert('Failed to import the SQL file. Please try again.');
         }
     });
 });
