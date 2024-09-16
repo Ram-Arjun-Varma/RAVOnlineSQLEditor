@@ -77,17 +77,31 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     downloadButton.addEventListener("click", () => {
         const sqlText = editor.getValue().trim();
+
         if (sqlText) {
-            const blob = new Blob([sqlText], { type: "text/plain" });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = "query.sql"; // Name of the file to be downloaded
-            a.target = "_blank"; // Open download in a new tab
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url); // Clean up the URL object after download
+            // Prompt the user for a file name
+            let fileName = prompt("Please enter a file name for the SQL download:", "query.sql");
+
+            // Check if user provided a valid name
+            if (fileName) {
+                // Add .sql extension if not provided
+                if (!fileName.endsWith(".sql")) {
+                    fileName += ".sql";
+                }
+
+                const blob = new Blob([sqlText], { type: "text/plain" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = fileName; // Use the user-provided name
+                a.target = "_blank"; // Open download in a new tab
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url); // Clean up the URL object after download
+            } else {
+                alert("Download canceled. Please provide a valid file name.");
+            }
         } else {
             alert("No SQL query to download!");
         }
@@ -106,14 +120,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     const sqlText = e.target.result;
                     editor.setValue(sqlText); // Set the content in the editor
                     outputTable.innerHTML = ''; // Clear previous output
                     const queries = sqlText.split(';').filter(q => q.trim() !== ''); // Split queries by ';'
                     executeSQLQueries(queries); // Execute each query after importing
                 };
-                reader.onerror = function(error) {
+                reader.onerror = function (error) {
                     console.error('Error reading file:', error);
                 };
                 reader.readAsText(file); // Read the content of the file
