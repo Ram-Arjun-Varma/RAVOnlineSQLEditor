@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Initialize a new database
     const db = new SQL.Database();
 
-    //Button Initialization
+    // Button Initialization
     const outputTable = document.getElementById("output-table");
 
     // Initialize CodeMirror for SQL editing
@@ -90,6 +90,29 @@ document.addEventListener("DOMContentLoaded", async () => {
             URL.revokeObjectURL(url); // Clean up the URL object after download
         } else {
             alert("No SQL query to download!");
+        }
+    });
+
+    // Import SQL from a file and populate the editor
+    const importButton = document.getElementById("import-sql");
+    const fileInput = document.getElementById("sql-file-input");
+
+    importButton.addEventListener("click", () => {
+        fileInput.click(); // Trigger file selection dialog
+    });
+
+    fileInput.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const sqlText = e.target.result;
+                editor.setValue(sqlText); // Set the content in the editor
+                outputTable.innerHTML = ''; // Clear previous output
+                const queries = sqlText.split(';').filter(q => q.trim() !== ''); // Split queries by ';'
+                executeSQLQueries(queries); // Execute each query after importing
+            };
+            reader.readAsText(file); // Read the content of the file
         }
     });
 });
